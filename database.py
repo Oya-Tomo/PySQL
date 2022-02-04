@@ -1,7 +1,7 @@
 import sqlite3
 import sys
-from table import Table
-from column import Column, ColumnTypes
+from .table import Table
+from .column import Column, ColumnTypes
 
 class DataBase:
     def __init__(self, file_name: str):

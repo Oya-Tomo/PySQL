@@ -1,5 +1,5 @@
-from const import ConstMeta
-from column import Column, ColumnTypes
+from .const import ConstMeta
+from .column import Column, ColumnTypes
 import sys
 
 class Table:

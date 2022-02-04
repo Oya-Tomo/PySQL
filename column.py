@@ -1,5 +1,5 @@
 import sys
-from const import ConstMeta
+from .const import ConstMeta
 
 class ColumnTypes(metaclass=ConstMeta):
     """
