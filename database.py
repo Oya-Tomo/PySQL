@@ -143,8 +143,8 @@ if __name__ == "__main__":
     # db.insert_data(test_table.table_name, {"name": "saku", "age": 67})
     # db.insert_data(test_table.table_name, {"name": "saka", "age": 66})
 
-    res = db.select_data(test_table.table_name, where="name='yuka'",order_by="name asc")
+    res = db.select_data(test_table.table_name, where="name='saka'",order_by="name asc")
     print(res)
 
-    db.update_data(test_table.table_name, {"name": "oya-tomo"}, where="age=16")
+    db.update_data(test_table.table_name, {"name": "saka"}, where="age=16")
     # db.delete_data(test_table.table_name, where="age=67")
