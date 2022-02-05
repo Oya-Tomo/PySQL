@@ -1,5 +1,10 @@
 import sys
-from .const import ConstMeta
+
+try:
+    from .const import ConstMeta
+except:
+    from const import ConstMeta
+
 
 class ColumnTypes(metaclass=ConstMeta):
     """

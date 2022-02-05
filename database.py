@@ -1,7 +1,13 @@
 import sqlite3
 import sys
-from .table import Table
-from .column import Column, ColumnTypes
+
+try:
+    from .table import Table
+    from .column import Column, ColumnTypes
+except:
+    from table import Table
+    from column import Column, ColumnTypes
+    print("PySQLite mode: develop")
 
 class DataBase:
     def __init__(self, file_name: str):
@@ -76,6 +82,7 @@ class DataBase:
         self.commit()
 
     def select_data(self, table_name: str, where: str=None, order_by: str=None, limit: int=None):
+        columns = [item["table_name"] for item in self.get_table_info(table_name)]
         sql = f"select * from {table_name}"
         if where != None:
             sql += f" where {where}"
@@ -89,7 +96,8 @@ class DataBase:
         res = self.cursor.fetchall()
         self.commit()
 
-        return res
+        data = [{columns[i]: item[i] for i in range(len(columns))} for item in res]
+        return data
 
     def update_data(self, table_name: str, data_json: dict, where: str=None):
         columns = [f"{key}=?" for key in data_json.keys()]        
@@ -129,17 +137,14 @@ if __name__ == "__main__":
 
     db.create_table(test_table)
     # db.rename_table(test_table.table_name+" ", "people")
-    print(db.get_table_names())
-    pprint.pprint(db.get_table_info(test_table.table_name))
-    db.insert_data(test_table.table_name, {"name": "taka", "age": 67})
-    db.insert_data(test_table.table_name, {"name": "saku", "age": 67})
-    db.insert_data(test_table.table_name, {"name": "saka", "age": 66})
-    db.insert_data(test_table.table_name, {"name": "tomo", "age": 16})
-    db.insert_data(test_table.table_name, {"name": "yuka", "age": 41})
-    db.insert_data(test_table.table_name, {"name": "mariko", "age": 70})
+    # print(db.get_table_names())
+    # pprint.pprint(db.get_table_info(test_table.table_name))
+    # db.insert_data(test_table.table_name, {"name": "taka", "age": 67})
+    # db.insert_data(test_table.table_name, {"name": "saku", "age": 67})
+    # db.insert_data(test_table.table_name, {"name": "saka", "age": 66})
 
-    res = db.select_data(test_table.table_name, where="age = 67",order_by="name asc")
+    res = db.select_data(test_table.table_name, where="name='yuka'",order_by="name asc")
     print(res)
 
     db.update_data(test_table.table_name, {"name": "oya-tomo"}, where="age=16")
-    db.delete_data(test_table.table_name, where="age=67")
+    # db.delete_data(test_table.table_name, where="age=67")

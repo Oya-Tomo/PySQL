@@ -1,6 +1,11 @@
-from .const import ConstMeta
-from .column import Column, ColumnTypes
 import sys
+
+try:
+    from .const import ConstMeta
+    from .column import Column, ColumnTypes
+except:
+    from const import ConstMeta
+    from column import Column, ColumnTypes
 
 class Table:
     """
